@@ -42,7 +42,7 @@ The purpose of ReelRatings is to create an engaging movie rating platform where 
 To get the project running locally, follow these steps:
 
 1. **Clone the repository**:
-   git clone https://github.com/yourusername/ReelRatings.git
+   git clone https://github.com/yourusername/reelratings.git
    cd ReelRatings
 
 ## Folder Structure
