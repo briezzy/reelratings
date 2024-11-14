@@ -1,0 +1,230 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.auth-buttons .btn {
+	text-decoration: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.signin-btn {
+    background-color: #333;
+    color: white;
+}
+
+.register-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    background: url('.jpg') no-repeat center/cover;
+    padding: 150px 20px;
+    color: black;
+}
+
+.hero h1 {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.hero-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hero-btn {
+    padding: 15px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.browse-btn {
+    background-color: #333;
+    color: white;
+}
+
+.register-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Movies Section */
+.popular-movies {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.movies-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.movie-card {
+    background-color: white;
+    padding: 15px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Community Section */
+.community {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.community-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.community-card {
+    background-color: white;
+    padding: 20px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    justify-content: space-around;
+
+}
+
+.footer-column ul {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.footer-column a {
+    color: white;
+    text-decoration: none;
+}
+/* Auth Screens */
+.auth-screen {
+    text-align: center;
+    padding: 50px;
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-screen h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.auth-screen form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-screen input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.auth-screen .btn {
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+}
+/* Search Section */
+.search-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#search-button {
+    padding: 8px 16px;
+    margin-left: 5px;
+    font-size: 16px;
+	background-color: black; 
+    color: white;
+    border: none;
+    cursor: pointer;
+} 
+
+.search-bar {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Movie Cards in Trending Section */
+.popular-movies .movies-grid .movie-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: bold;
+}
