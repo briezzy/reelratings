@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse Communities on ReelRatings">
+    <title>Community - ReelRatings</title>
+    <link rel="stylesheet" href="../src/styles/main.css">
+</head>
+<body>
+    <!-- Header Section (same as homepage) -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-menu">
+               <a href="index.html">Home</a>
+			    <a href="browse.html">Browse</a>
+                <a href="movieList.html">My Movie List</a>
+                <a href="whereToWatch.html">Where to Watch</a>
+                <a href="#">Contact</a>
+				</div>
+            <div class="auth-buttons">
+                  <a href="login.html" class="btn signin-btn">Sign In</a>
+                <a href="register.html" class="btn register-btn">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Browse For Communities</h1>
+        <p>Join a Community and Hop into the Movie Conversations </p>
+    </div>
+
+    <!-- Browse Section with Search Bar and Top Communities -->
+    <main>
+        <section class="search-section">
+            <input type="text" class="search-bar" placeholder="Search for Any Communities...">
+			 <button id="search-button">Search</button>
+        </section>
+
+        <section class="community">
+            <h2>Trending Communities</h2>
+            <div class="community-grid">
+                <div class="community-card">Community 1</div>
+                <div class="community-card">Community 2</div>
+                <div class="community-card">Community 3</div>
+                <div class="community-card">Community 4</div>
+                <div class="community-card">Community 5</div>
+                <div class="community-card">Community 6</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Design</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+	    <p>&copy; 2024 ReelRatings</p>
+    </footer>
+    <script src="../src/js/User.js"></script>
+</body>
+</html>
