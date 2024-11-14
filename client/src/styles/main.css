@@ -228,3 +228,46 @@ footer {
     text-align: center;
     font-weight: bold;
 }
+
+/* Comunity Cards in Trending Section */
+.community .community-grid .community-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Where to Watch Section */
+.watch-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.platforms-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.platform-card {
+    background-color: white;
+    padding: 20px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.platform-card h3 {
+    margin-bottom: 10px;
+}
+
+.platform-card a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
