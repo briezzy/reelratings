@@ -1,13 +1,13 @@
 const express = require('express');
-const path = require('path');
+const movieRoutes = require('./routes/movieRoutes');
+require('dotenv').config();
 const app = express();
-const port = 3000;
-
-app.use(express.static(path.join(__dirname, '../client/public')));
-app.use('/src', express.static(path.join(__dirname, '../client/src')));
+// const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to parse JSON data
 app.use(express.json());
+app.use('/api/movies', movieRoutes);
 
 // Simulated database (for demonstration purposes)
 let users = [];
@@ -83,9 +83,8 @@ app.post('/follow', (req, res) => {
 });
 
 // Starting the server
-app.listen(port, () => {
-  console.log(`ReelRatings server is running at 
-http://localhost:${port}`);
-});
 
+app.listen(port, () => {
+  console.log(`ReelRatings server running at http://localhost:${port}`);
+});
 
