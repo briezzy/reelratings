@@ -18,10 +18,22 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
+    
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ userId: user._id }, 
-process.env.JWT_SECRET);
-      res.status(200).json({ message: 'Login successful', token });
+      const token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: '24h' }
+      );
+      
+      res.status(200).json({
+        message: 'Login successful',
+        token,
+        user: {
+          id: user._id,
+          username: user.username
+        }
+      });
     } else {
       res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -29,7 +41,6 @@ process.env.JWT_SECRET);
     res.status(500).json({ error: 'Failed to login' });
   }
 };
-
 exports.follow = async (req, res) => {
   try {
     const { userId } = req.params;

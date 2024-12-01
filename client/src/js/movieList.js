@@ -1,3 +1,4 @@
+import AuthService from '../utils/authService.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const watchlist = new Watchlist();

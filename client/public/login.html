@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Log in to your ReelRatings account">
     <title>Login - ReelRatings</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../src/styles/main.css">
 </head>
 <body>
     <header>
@@ -16,17 +16,34 @@
         </nav>
     </header>
 
-    <main>
+    <main role="main">
         <div class="auth-screen">
             <h2>Log In</h2>
-            <form id="loginForm">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
+            <form class="auth-form" id="loginForm">
+                <div id="errorMessage" class="error-message" style="display: none; color: red; margin-bottom: 10px;"></div>
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
                 <button type="submit" class="btn signin-btn">Log In</button>
             </form>
-            <p>Don't have an account? <a href="register.html" class="link-btn">Register</a></p>
+            <a href="register.html" class="link-btn">Don't have an account? Register</a>
         </div>
     </main>
+    <script type="module">
+        import AuthService from '../src/utils/authService.js';
+        
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                await AuthService.login(username, password);
+                window.location.href = '/index.html';
+            } catch (error) {
+                alert('Login failed: ' + error.message);
+            }
+        });
+    </script>
 <!-- Footer Section -->
     <footer>
         <div class="footer-links">

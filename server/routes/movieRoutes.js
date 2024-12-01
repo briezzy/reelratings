@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const MovieController = require('../controllers/MovieController');
+const auth = require('../middleware/authentication');
+
+// Protech these routes with authentication
+router.use(auth);
 
 // Add a movie to a user’s list
 router.post('/:userId/add', MovieController.addMovie);
