@@ -12,6 +12,9 @@ module.exports = (req, res, next) => {
     req.user = decoded; // Attach user data to request object
     next(); // Proceed to the next middleware or route handler
   } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'Token expired. Please login again.' });
+    }
     res.status(400).json({ error: 'Invalid token.' });
   }
 };
