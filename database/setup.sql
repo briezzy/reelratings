@@ -22,8 +22,8 @@ create table follows
 	);
 create table movie
 	(movieID	int unsigned,
-	name	varchar(20),
-	genre	varchar(20),
+	name	varchar(100),
+	genre	varchar(50),
 	primary key (movieID)
 	);
 create table adds
