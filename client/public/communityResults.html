@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search Results - ReelRatings">
+    <title>Community Results - ReelRatings</title>
+   <link rel="stylesheet" href="../src/styles/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="movieList.html">My Movie List</a>
+                <a href="whereToWatch.html">Where to Watch</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn signin-btn">Sign In</a>
+                <a href="register.html" class="btn register-btn">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Community Search Results</h1>
+        <p>Your search results for: <span id="search-term"></span></p>
+    </div>
+
+    <!-- Search Results Section -->
+    <main>
+        <section class="search-results">
+            <div class="community-grid" id="community-grid">
+                <!-- Results will be populated dynamically here -->
+            </div>
+            <p id="no-results-message" style="display:none;">No results found.</p>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Design</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2024 ReelRatings</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Get the search term from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('search');
+
+        // Display the search term on the page
+        document.getElementById('search-term').textContent = searchTerm;
+
+        // Fetch and display the communities based on the search term
+        function fetchCommunities() {
+            fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const communityGrid = document.getElementById('community-grid');
+                    const noResultsMessage = document.getElementById('no-results-message');
+                    communityGrid.innerHTML = ''; 
+
+                    // If no communities are found, display the "No results found" message
+                    if (data.length === 0) {
+                        noResultsMessage.style.display = 'block'; // Show the "No results" message
+                    } else {
+                        noResultsMessage.style.display = 'none';
+                        data.forEach(community => {
+                            const communityCard = document.createElement('div');
+                            communityCard.className = 'community-card';
+                            communityCard.innerHTML = `
+                                <h3>${community.name}</h3>
+                                <p>${community.description}</p>
+                            `;
+                            communityGrid.appendChild(communityCard);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching communities:', error));
+        }
+
+        fetchCommunities();
+    </script>
+</body>
+</html>
