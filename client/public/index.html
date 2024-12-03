@@ -100,5 +100,52 @@
         <!-- Scripts -->
         <script src="../src/js/User.js"></script>
         <script src="../src/js/Watchlist.js"></script>
+	<script>
+    // Fetch and display top movies
+    function fetchMovies() {
+        fetch('fetchMovies.php')  // Make a request to the PHP script
+            .then(response => response.json())  
+            .then(data => {
+                const moviesGrid = document.getElementById('movies-grid');
+                moviesGrid.innerHTML = ''; 
+                data.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.className = 'movie-card';
+                    movieCard.innerHTML = `
+                        <h3>${movie.name}</h3>
+                        <p>${movie.genre}</p>
+                    `;
+                    moviesGrid.appendChild(movieCard);
+                });
+            })
+            .catch(error => console.error('Error fetching movies:', error));
+    }
+
+    fetchMovies();
+</script>
+<script>
+        // Fetch and display communities
+        function fetchCommunities(searchTerm = '') {
+            fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const communityGrid = document.getElementById('community-grid');
+                    communityGrid.innerHTML = ''; 
+
+                    data.forEach(community => {
+                        const communityCard = document.createElement('div');
+                        communityCard.className = 'community-card';
+                        communityCard.innerHTML = `
+                            <h3><a href="communityDetails.html?communityId=${community.id}">${community.name}</a></h3>
+                            <p>${community.description}</p>
+                        `;
+                        communityGrid.appendChild(communityCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching communities:', error));
+        }
+
+        fetchCommunities();
+    </script>
 </body>
 </html>
