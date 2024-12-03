@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Movie Review - ReelRatings">
+    <title>Movie Review - ReelRatings</title>
+    <link rel="stylesheet" href="../src/styles/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-menu">
+               <a href="index.html">Home</a>
+                <a href="movieList.html">My Movie List</a>
+                <a href="community.html" >Community</a>
+                <a href="whereToWatch.html">Where to Watch</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                  <a href="login.html" class="btn signin-btn">Sign In</a>
+                <a href="register.html" class="btn register-btn">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1 id="movie-title">Movie Review</h1>
+        <p>Rate and leave your review for <span id="movie-name"></span></p>
+    </div>
+
+    <!-- Movie Review Section -->
+    <main>
+        <section class="review-section">
+            <h2>Rate the Movie</h2>
+
+            <!-- Rating Form -->
+            <form id="review-form">
+                <div>
+                    <label for="rating">Rating (out of 5):</label>
+                    <input type="number" id="rating" name="rating" min="1" max="5" required />
+                </div>
+                <div>
+                    <label for="description">Review:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <button type="submit" id="submit-review" class="btn signin-btn">Submit Review</button>
+            </form>
+
+            <div id="reviews-section">
+          
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Design</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2024 ReelRatings</p>
+    </footer>
+
+    <script src="../src/js/User.js"></script>
+    <script src="../src/js/Watchlist.js"></script>
+
+    <script>
+        const movieId = new URLSearchParams(window.location.search).get('movieId');
+        
+        // Fetch movie name based on movieId (In real app, replace with dynamic data)
+        document.getElementById('movie-name').textContent = 'Dune 2';  // Example movie name
+        
+        // Fetch and display existing reviews for the movie
+        function fetchReviews() {
+            fetch(`fetchReviews.php?movieId=${movieId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const reviewsSection = document.getElementById('reviews-section');
+                    reviewsSection.innerHTML = '';  // Clear existing reviews
+                    
+                    data.forEach(review => {
+                        const reviewCard = document.createElement('div');
+                        reviewCard.className = 'review-card';
+                        reviewCard.innerHTML = `
+                            <h4>Rating: ${review.rating} / 5</h4>
+                            <p>${review.description}</p>
+                        `;
+                        reviewsSection.appendChild(reviewCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching reviews:', error));
+        }
+
+        // Submit a review
+        document.getElementById('review-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const rating = document.getElementById('rating').value;
+            const description = document.getElementById('description').value;
+
+            // Send review to the server
+            fetch('submitReview.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    movieId,
+                    rating,
+                    description,
+                    userId: 1  // Replace with the actual user ID
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Review submitted successfully') {
+                    fetchReviews();  // Refresh the reviews list
+                    document.getElementById('review-form').reset();  // Clear the form
+                    
+                    // Disable submit button and change text to "Submitted"
+                    const submitButton = document.getElementById('submit-review');
+                    submitButton.classList.add('submitted');
+                    submitButton.textContent = 'Submitted';
+                }
+            })
+            .catch(error => console.error('Error submitting review:', error));
+        });
+
+        fetchReviews();  // Fetch reviews when the page loads
+    </script>
+</body>
+</html>

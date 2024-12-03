@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Community Details - ReelRatings">
+    <title>Community Details - ReelRatings</title>
+    <link rel="stylesheet" href="../src/styles/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="movieList.html">My Movie List</a>
+                <a href="whereToWatch.html">Where to Watch</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn signin-btn">Sign In</a>
+                <a href="register.html" class="btn register-btn">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Community Details</h1>
+        <p>Join the conversation in <span id="community-name"></span>!</p>
+    </div>
+
+    <!-- Community Section -->
+    <main>
+        <section class="community-info">
+            <div id="community-info" class="community-info-container">
+                <h2>Community: <span id="community-name"></span></h2>
+                <p id="community-description"></p>
+
+                <button id="join-community" class="join-btn">Join this Community</button>
+
+                <h3>Posts</h3>
+                <div id="posts-section" class="posts-section">
+                    <!-- Posts will be dynamically populated here -->
+                </div>
+
+                <!-- Post Submission Form -->
+                <div id="post-form">
+                    <textarea id="post-text" placeholder="Write your post here..." rows="4" class="post-textarea"></textarea>
+                    <button id="submit-post" class="btn signin-btn">Submit Post</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul>
+                    <li><a href="#">Design</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <p>&copy; 2024 ReelRatings</p>
+    </footer>
+
+    <script>
+        const reviewId = new URLSearchParams(window.location.search).get('reviewId');
+
+        // Fetch community details based on reviewId
+        function fetchCommunityDetails() {
+            fetch(`fetchCommunityDetails.php?reviewId=${reviewId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('community-name').textContent = data.name;
+                    document.getElementById('community-description').textContent = data.description;
+
+                    const postsSection = document.getElementById('posts-section');
+                    data.posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'post-card';
+                        postElement.innerHTML = `
+                            <h4>${post.title}</h4>
+                            <p>${post.text}</p>
+                        `;
+                        postsSection.appendChild(postElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching community details:', error));
+        }
+
+        // Call function to fetch community details
+        fetchCommunityDetails();
+
+        // Handle "Join this Community" button
+        document.getElementById('join-community').addEventListener('click', () => {
+            const button = document.getElementById('join-community');
+            button.textContent = 'Joined';
+            button.style.backgroundColor = '#ccc';  // Turn gray when clicked
+            button.disabled = true;
+
+            // Call backend to add user to the community (you need to implement this on your backend)
+            alert('You have joined the community!');
+        });
+
+        // Submit a new post to the community
+        document.getElementById('submit-post').addEventListener('click', () => {
+            const postText = document.getElementById('post-text').value.trim();
+            if (postText) {
+                // Call backend to submit the post
+                fetch('submitPost.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        communityId,
+                        userId: 1,  // Replace with actual user ID
+                        text: postText
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Add the new post to the page
+                    const postsSection = document.getElementById('posts-section');
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post-card';
+                    postElement.innerHTML = `
+                        <h4>New Post</h4>
+                        <p>${postText}</p>
+                    `;
+                    postsSection.prepend(postElement);  // Add the new post at the top
+                    document.getElementById('post-text').value = '';  // Clear the text box
+                })
+                .catch(error => console.error('Error submitting post:', error));
+            } else {
+                alert("Please write a post.");
+            }
+        });
+    </script>
+</body>
+</html>
