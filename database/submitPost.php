@@ -14,7 +14,7 @@ try {
     $data = json_decode(file_get_contents('php://input'), true);
 
     $reviewId = $data['reviewId'];
-    $userId = $data['userId'];  // Replace with actual user ID from session or authentication
+    $userId = $data['userId'];  
     $postText = $data['text'];
 
     // Insert the new post into the database
