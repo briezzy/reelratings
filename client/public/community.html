@@ -34,7 +34,7 @@
     <!-- Browse Section with Search Bar and Top Communities -->
     <main>
         <section class="search-section">
-            <input type="text" class="search-bar" placeholder="Search for Any Communities...">
+            <input type="text" class="search-bar" id="search-input" placeholder="Search for Any Communities...">
 			 <button id="search-button">Search</button>
         </section>
 
@@ -72,5 +72,40 @@
 	    <p>&copy; 2024 ReelRatings</p>
     </footer>
     <script src="../src/js/User.js"></script>
+    <script>
+        // Fetch and display communities
+        function fetchCommunities(searchTerm = '') {
+            fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const communityGrid = document.getElementById('community-grid');
+                    communityGrid.innerHTML = ''; 
+
+                    data.forEach(community => {
+                        const communityCard = document.createElement('div');
+                        communityCard.className = 'community-card';
+                        communityCard.innerHTML = `
+                            <h3>${community.name}</h3>
+                            <p>${community.description}</p>
+                        `;
+                        communityGrid.appendChild(communityCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching communities:', error));
+        }
+
+        
+        fetchCommunities();
+
+        document.getElementById('search-button').addEventListener('click', () => {
+            const searchTerm = document.getElementById('search-input').value.trim(); 
+            if (searchTerm) {
+                
+                window.location.href = `communityResults.html?search=${encodeURIComponent(searchTerm)}`;
+            } else {
+                alert("Please enter a search term.");
+            }
+        });
+    </script>
 </body>
 </html>
