@@ -45,6 +45,9 @@ To get the project running locally, follow these steps:
    git clone https://github.com/yourusername/reelratings.git
    cd ReelRatings
 
+2. **Load Database**: load the database .sql files manually to ensure database connection.
+
+
 ## Folder Structure
 
 /client: Holds all frontend code.
