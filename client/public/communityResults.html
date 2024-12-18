@@ -134,38 +134,5 @@ if (username) {
 }
 
 </script>
-<script>
-    // Check if the user is logged in
-const username = localStorage.getItem('username');
-const authButtons = document.querySelector('.auth-buttons');
-const usernameDisplay = document.createElement('span');
-
-if (username) {
-    // If the user is logged in, display their username and add a logout option
-    usernameDisplay.id = 'usernameDisplay';
-    usernameDisplay.textContent = username;
-    usernameDisplay.style.cursor = 'pointer';  // Make it clickable
-
-    // Apply the 'username-display' class to style it
-    usernameDisplay.classList.add('username-display');
-    
-    usernameDisplay.onclick = function() {
-        // Ask the user if they want to log out
-        const confirmLogout = confirm("Do you want to log out?");
-        if (confirmLogout) {
-            // Clear the stored username and log the user out
-            localStorage.removeItem('username');
-            // Redirect to the login page
-            window.location.href = 'login.html';
-        }
-    };
-
-    // Clear the Sign In and Register buttons
-    authButtons.innerHTML = '';  
-    // Add the username as clickable element
-    authButtons.appendChild(usernameDisplay);  
-}
-
-</script>
 </body>
 </html>
