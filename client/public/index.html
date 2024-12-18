@@ -100,52 +100,87 @@
         <!-- Scripts -->
         <script src="../src/js/User.js"></script>
         <script src="../src/js/Watchlist.js"></script>
-	<script>
-    // Fetch and display top movies
-    function fetchMovies() {
-        fetch('fetchMovies.php')  // Make a request to the PHP script
-            .then(response => response.json())  
-            .then(data => {
-                const moviesGrid = document.getElementById('movies-grid');
-                moviesGrid.innerHTML = ''; 
-                data.forEach(movie => {
-                    const movieCard = document.createElement('div');
-                    movieCard.className = 'movie-card';
-                    movieCard.innerHTML = `
-                        <h3>${movie.name}</h3>
-                        <p>${movie.genre}</p>
-                    `;
-                    moviesGrid.appendChild(movieCard);
-                });
-            })
-            .catch(error => console.error('Error fetching movies:', error));
-    }
-
-    fetchMovies();
-</script>
-<script>
-        // Fetch and display communities
-        function fetchCommunities(searchTerm = '') {
-            fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
+   <script>
+        // Fetch and display top movies
+        function fetchMovies() {
+            fetch('fetchMovies.php')  // Make a request to the PHP script
                 .then(response => response.json())
                 .then(data => {
-                    const communityGrid = document.getElementById('community-grid');
-                    communityGrid.innerHTML = ''; 
-
-                    data.forEach(community => {
-                        const communityCard = document.createElement('div');
-                        communityCard.className = 'community-card';
-                        communityCard.innerHTML = `
-                            <h3><a href="communityDetails.html?communityId=${community.id}">${community.name}</a></h3>
-                            <p>${community.description}</p>
+                    const moviesGrid = document.getElementById('movies-grid');
+                    moviesGrid.innerHTML = '';
+                    data.forEach(movie => {
+                        const movieCard = document.createElement('div');
+                        movieCard.className = 'movie-card';
+                        movieCard.innerHTML = `
+                            <h3><a href="movieReview.html?movieId=${movie.id}">${movie.name}</a></h3>
+                            <p>${movie.genre}</p>
                         `;
-                        communityGrid.appendChild(communityCard);
+                        moviesGrid.appendChild(movieCard);
                     });
                 })
-                .catch(error => console.error('Error fetching communities:', error));
+                .catch(error => console.error('Error fetching movies:', error));
         }
 
-        fetchCommunities();
+        fetchMovies();
     </script>
+
+   <script>
+    // Fetch and display communities
+    function fetchCommunities(searchTerm = '') {
+        fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                const communityGrid = document.getElementById('community-grid');
+                communityGrid.innerHTML = '';
+
+                data.forEach(community => {
+                    const communityCard = document.createElement('div');
+                    communityCard.className = 'community-card';
+                    communityCard.innerHTML = `
+                        <h3><a href="communityDetails.html?communityId=${community.communityID}">${community.name}</a></h3>
+                        <p>${community.description}</p>
+                    `;
+                    communityGrid.appendChild(communityCard);
+                });
+            })
+            .catch(error => console.error('Error fetching communities:', error));
+    }
+
+    fetchCommunities();
+</script>
+
+<script>
+    // Check if the user is logged in
+const username = localStorage.getItem('username');
+const authButtons = document.querySelector('.auth-buttons');
+const usernameDisplay = document.createElement('span');
+
+if (username) {
+    // If the user is logged in, display their username and add a logout option
+    usernameDisplay.id = 'usernameDisplay';
+    usernameDisplay.textContent = username;
+    usernameDisplay.style.cursor = 'pointer';  // Make it clickable
+
+    // Apply the 'username-display' class to style it
+    usernameDisplay.classList.add('username-display');
+    
+    usernameDisplay.onclick = function() {
+        // Ask the user if they want to log out
+        const confirmLogout = confirm("Do you want to log out?");
+        if (confirmLogout) {
+            // Clear the stored username and log the user out
+            localStorage.removeItem('username');
+            // Redirect to the login page
+            window.location.href = 'login.html';
+        }
+    };
+
+    // Clear the Sign In and Register buttons
+    authButtons.innerHTML = '';  
+    // Add the username as clickable element
+    authButtons.appendChild(usernameDisplay);  
+}
+
+</script>
 </body>
 </html>
