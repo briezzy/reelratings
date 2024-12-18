@@ -40,7 +40,8 @@
 
         <section class="community">
             <h2>Trending Communities</h2>
-            <div class="community-grid">
+            <div class="community-grid" id="community-grid">
+	    <!-- Community cards will be dynamically inserted here -->
                 <div class="community-card">Community 1</div>
                 <div class="community-card">Community 2</div>
                 <div class="community-card">Community 3</div>
@@ -72,20 +73,20 @@
 	    <p>&copy; 2024 ReelRatings</p>
     </footer>
     <script src="../src/js/User.js"></script>
-    <script>
+ <script>
         // Fetch and display communities
         function fetchCommunities(searchTerm = '') {
             fetch(`fetchCommunities.php?search=${encodeURIComponent(searchTerm)}`)
                 .then(response => response.json())
                 .then(data => {
                     const communityGrid = document.getElementById('community-grid');
-                    communityGrid.innerHTML = ''; 
+                    communityGrid.innerHTML = ''; // Clear the grid before adding new data
 
                     data.forEach(community => {
                         const communityCard = document.createElement('div');
                         communityCard.className = 'community-card';
                         communityCard.innerHTML = `
-                            <h3>${community.name}</h3>
+                            <h3><a href="communityDetails.html?communityId=${community.communityID}">${community.name}</a></h3>
                             <p>${community.description}</p>
                         `;
                         communityGrid.appendChild(communityCard);
@@ -94,18 +95,50 @@
                 .catch(error => console.error('Error fetching communities:', error));
         }
 
-        
         fetchCommunities();
 
+        // Search button functionality
         document.getElementById('search-button').addEventListener('click', () => {
-            const searchTerm = document.getElementById('search-input').value.trim(); 
+            const searchTerm = document.getElementById('search-input').value.trim();
             if (searchTerm) {
-                
                 window.location.href = `communityResults.html?search=${encodeURIComponent(searchTerm)}`;
             } else {
                 alert("Please enter a search term.");
             }
         });
+    </script>
+
+    <script>
+        // Check if the user is logged in
+        const username = localStorage.getItem('username');
+        const authButtons = document.querySelector('.auth-buttons');
+        const usernameDisplay = document.createElement('span');
+
+        if (username) {
+            // If the user is logged in, display their username and add a logout option
+            usernameDisplay.id = 'usernameDisplay';
+            usernameDisplay.textContent = username;
+            usernameDisplay.style.cursor = 'pointer';  // Make it clickable
+
+            // Apply the 'username-display' class to style it
+            usernameDisplay.classList.add('username-display');
+
+            usernameDisplay.onclick = function() {
+                // Ask the user if they want to log out
+                const confirmLogout = confirm("Do you want to log out?");
+                if (confirmLogout) {
+                    // Clear the stored username and log the user out
+                    localStorage.removeItem('username');
+                    // Redirect to the login page
+                    window.location.href = 'login.html';
+                }
+            };
+
+            // Clear the Sign In and Register buttons
+            authButtons.innerHTML = '';
+            // Add the username as clickable element
+            authButtons.appendChild(usernameDisplay);
+        }
     </script>
 </body>
 </html>
