@@ -49,3 +49,14 @@ insert into movie values (47, 'The Intouchables', 'Docudrama');
 insert into movie values (48, 'Cinema Paradiso', 'Coming-of-Age');
 insert into movie values (49, 'Dune: Part Two', 'Action Epic');
 insert into movie values (50, 'Modern Times', 'Comedy');
+-- Insert into community_members table
+use reelratings;
+INSERT INTO community_members (communityID, userID) VALUES
+(1, 201), -- Marvel Cinematic Universe Fans, UserID 201
+(1, 202), -- Marvel Cinematic Universe Fans, UserID 202
+(2, 203), -- Star Wars Universe, UserID 203
+(3, 204), -- Horror Movie Buffs, UserID 204
+(4, 205), -- Classic Film Lovers, UserID 205
+(5, 206); -- Animated Movie Fans, UserID 206
+
+
