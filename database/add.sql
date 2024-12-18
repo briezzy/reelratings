@@ -1,3 +1,4 @@
+-- Insert into movie table
 use reelratings;
 insert into movie values (1, 'The Shawshank Redemption', 'Epic');
 insert into movie values (2, 'The Godfather', 'Epic');
